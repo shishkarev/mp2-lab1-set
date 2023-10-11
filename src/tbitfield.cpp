@@ -7,32 +7,46 @@
 
 #include <limits>
 #include <iostream>
+#include <vector>
 #include "tbitfield.h"
 
 TBitField::TBitField(size_t len)
 {
-   
+    bitLen=len;
+    if (len==0) memLen=0;
+    else if (len>0) memLen=1+(len-1)/sizeof(uint)*8;
+    this->pMem = new uint[memLen];
+    for (size_t i=0; i<memLen; i++ ){
+        this->pMem[i]=0;
+    }
 }
 
 TBitField::TBitField(const TBitField &bf) // конструктор копирования
 {
-
+    this->bitLen=bf.bitLen;
+    this->memLen=bf.memLen;
+    this->pMem = new uint[memLen];
+    for (size_t i=0; i<memLen; i++){
+        this->pMem[i]=bf.pMem[i];
+    }
 }
 
 size_t TBitField::getIndex(const size_t n) const  // индекс в pМем для бита n
 {
-    return 0;
+    return (n/sizeof(uint)*8);
 }
 
 uint TBitField::getMask(const size_t n) const // битовая маска для бита n
 {
-    return 0;
+    uint tmp = 0;
+    tmp=tmp|1<<n%sizeof(uint)*8;
+    return tmp;
 }
 
 // доступ к битам битового поля
 uint TBitField::getLength() const // получить длину (к-во битов)
 {
-    return 0;
+    return bitLen;
 }
 
 size_t TBitField::getNumBytes() const // получить количество байт выделенной памяти
@@ -42,7 +56,9 @@ size_t TBitField::getNumBytes() const // получить количество �
 
 void TBitField::setBit(const size_t n) // установить бит
 {
+    if (n<bitLen){
 
+    }
 }
 
 void TBitField::clrBit(const size_t n) // очистить бит
