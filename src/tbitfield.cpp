@@ -237,7 +237,7 @@ std::ostream &operator<<(std::ostream &ostr, const TBitField &bf) // вывод
         uint tmp = (uint)bf.pMem[i];
         int size=sizeof(uint)*8;
         std::string str = "";
-        for (int i=0;i<size;i++){
+        for (int j=0;j<size;j++){
             str = std::to_string(tmp%2)+str;
             tmp/=2;
         }
