@@ -99,7 +99,8 @@ TSet TSet::operator+(const uint elem) // объединение с элемен�
 
 TSet TSet::operator-(const uint elem) // разность с элементом
 {
-    return TSet(1);
+    bitField.clrBit(elem);
+    return *this;
 }
 
 TSet TSet::operator*(const TSet &s) // пересечение
