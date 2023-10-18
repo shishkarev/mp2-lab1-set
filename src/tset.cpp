@@ -121,6 +121,7 @@ TSet TSet::operator~() // дополнение
 }
 
 // перегрузка ввода/вывода
+
 std::istream &operator>>(std::istream &istr, TSet &s) // ввод
 {
     using namespace std;
