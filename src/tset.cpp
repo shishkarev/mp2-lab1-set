@@ -9,6 +9,8 @@
 #include "tbitfield.h"
 #include "tset.h"
 
+typedef size_t elType;
+
 TSet::TSet(size_t mp) : bitField(mp) {
     maxPower = mp;
 }

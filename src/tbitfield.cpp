@@ -11,6 +11,8 @@
 #include <vector>
 #include "tbitfield.h"
 
+typedef size_t elType;
+
 class Error : private std::exception{
 
 };
