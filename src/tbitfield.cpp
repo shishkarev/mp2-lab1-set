@@ -46,7 +46,8 @@ size_t TBitField::getIndex(const size_t n) const  // индекс в pМем д�
 elType TBitField::getMask(const size_t n) const // битовая маска для бита n
 {
     elType tmp = 0;
-    tmp=tmp|1<<(n%(sizeof(elType)*8));
+    if (getLength() < (sizeof(elType)*8)) tmp=tmp|1<<(n%(sizeof(elType)*8));
+    else tmp=tmp|1<<(n/2%(sizeof(elType)*8));
     return tmp;
 }
 
