@@ -103,7 +103,7 @@ TBitField& TBitField::operator=(const TBitField &bf) // присваивание
     bitLen=bf.bitLen;
     memLen=bf.memLen;
     pMem=new elType[memLen];
-    for (elType i=0;i<memLen;i++){
+    for (size_t i=0;i<memLen;i++){
         pMem[i]=bf.pMem[i];
     }
     return *this;
@@ -113,7 +113,7 @@ bool TBitField::operator==(const TBitField &bf) const // сравнение
 {
     if (this->bitLen!=bf.bitLen) return false;
     else{
-        for(elType i=0; i<this->memLen;i++){
+        for(size_t i=0; i<this->memLen;i++){
             if(pMem[i]!=bf.pMem[i]) return false;
         }
     }
@@ -130,7 +130,7 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 {
     if (this->bitLen==bf.bitLen){
         TBitField res(bitLen);
-        for(elType i=0; i<bitLen;i++){
+        for(size_t i=0; i<bitLen;i++){
             if(this->getBit(i)==1 || bf.getBit(i)==1){
                 res.setBit(i);
             }
@@ -139,12 +139,12 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
     }
     else if (this->bitLen>bf.bitLen){
         TBitField res(bitLen);
-        for(elType i=0; i<bf.bitLen;i++){
+        for(size_t i=0; i<bf.bitLen;i++){
             if(this->getBit(i)==1 || bf.getBit(i)==1){
                 res.setBit(i);
             }
         }
-        for(elType i=bf.bitLen; i<this->bitLen;i++){
+        for(size_t i=bf.bitLen; i<this->bitLen;i++){
             if(this->getBit(i)==1){
                 res.setBit(i);
             }
@@ -153,12 +153,12 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
     }
     else{
         TBitField res(bf.bitLen);
-        for(elType i=0; i<this->bitLen;i++){
+        for(size_t i=0; i<this->bitLen;i++){
             if(this->getBit(i)==1 || bf.getBit(i)==1){
                 res.setBit(i);
             }
         }
-        for(elType i=this->bitLen; i<bf.bitLen;i++){
+        for(size_t i=this->bitLen; i<bf.bitLen;i++){
             if(this->getBit(i)==1){
                 res.setBit(i);
             }
@@ -171,7 +171,7 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 {
     if (this->bitLen==bf.bitLen){
         TBitField res(bitLen);
-        for(elType i=0; i<bitLen;i++){
+        for(size_t i=0; i<bitLen;i++){
             if(this->getBit(i)==1 && bf.getBit(i)==1){
                 res.setBit(i);
             }
@@ -190,7 +190,7 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
             min=this->bitLen;
         }
         TBitField res(max);
-        for(elType i=0; i<min;i++){
+        for(size_t i=0; i<min;i++){
             if(this->getBit(i)==1 && bf.getBit(i)==1){
                 res.setBit(i);
             }
@@ -202,10 +202,10 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 TBitField TBitField::operator~() // отрицание
 {
     TBitField res(bitLen);
-    for (elType i=0;i<memLen-1;i++){
+    for (size_t i=0;i<memLen-1;i++){
         res.pMem[i]=~(this->pMem[i]);
     }
-    for(elType i=8*sizeof(elType)*(memLen-1);i<bitLen;i++){
+    for(size_t i=8*sizeof(elType)*(memLen-1);i<bitLen;i++){
         if(getBit(i)==0) res.setBit(i);
     }
     return res;
@@ -227,17 +227,17 @@ std::istream &operator>>(std::istream &istr, TBitField &bf) // ввод
     }
     else bf.memLen=bf.bitLen/(sizeof(elType)*8)+1;
     bf.pMem=new elType[bf.memLen];
-    for (elType i=0;i<bf.memLen;i++) istr >> bf.pMem[i];
+    for (size_t i=0;i<bf.memLen;i++) istr >> bf.pMem[i];
     return istr;
 }
 
 std::ostream &operator<<(std::ostream &ostr, const TBitField &bf) // вывод
 {
-    for (elType i=0; i<bf.memLen-1;i++){
+    for (size_t i=0; i<bf.memLen-1;i++){
         elType tmp = (elType)bf.pMem[i];
         elType size=sizeof(elType)*8;
         std::string str = "";
-        for (elType j=0;j<size;j++){
+        for (size_t j=0;j<size;j++){
             str = std::to_string(tmp%2)+str;
             tmp/=2;
         }
