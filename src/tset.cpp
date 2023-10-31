@@ -22,7 +22,7 @@ TSet::TSet(const TSet &s) : bitField(s.bitField) {
 // конструктор преобразования типа
 TSet::TSet(const TBitField &bf) : bitField(bf) {
     maxPower=bf.getLength();
-    this->bitField=bf;
+    bitField=bf;
 }
 
 TSet::operator TBitField()
@@ -71,7 +71,7 @@ bool TSet::operator==(const TSet &s) const // сравнение
 
 bool TSet::operator!=(const TSet &s) const // сравнение
 {
-    if (this->bitField!=s.bitField) return false;
+    if (this->bitField==s.bitField) return false;
     return true;
 }
 

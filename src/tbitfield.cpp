@@ -19,7 +19,7 @@ TBitField::TBitField(size_t len)
 {
     bitLen=len;
     if (len==0) memLen=0;
-    else if (len>0) memLen=1+(len-1)/sizeof(uint)*8;
+    else if (len>0) memLen=1+len/(sizeof(uint)*8);
     this->pMem = new uint[memLen];
     for (size_t i=0; i<memLen; i++ ){
         this->pMem[i]=0;
@@ -38,13 +38,13 @@ TBitField::TBitField(const TBitField &bf) // конструктор копиро
 
 size_t TBitField::getIndex(const size_t n) const  // индекс в pМем для бита n
 {
-    return (n/sizeof(uint)*8);
+    return (n/(sizeof(uint)*8));
 }
 
 uint TBitField::getMask(const size_t n) const // битовая маска для бита n
 {
     uint tmp = 0;
-    tmp=tmp|1<<n%sizeof(uint)*8;
+    tmp=tmp|1<<(n%(sizeof(uint)*8));
     return tmp;
 }
 
