@@ -105,7 +105,7 @@ TBitField& TBitField::operator=(const TBitField &bf) // присваивание
     bitLen=bf.bitLen;
     memLen=bf.memLen;
     pMem=new elType[memLen];
-    for (size_t i=0;i<memLen;i++){
+    for (int i=0;i<memLen;i++){
         pMem[i]=bf.pMem[i];
     }
     return *this;
@@ -115,7 +115,7 @@ bool TBitField::operator==(const TBitField &bf) const // сравнение
 {
     if (this->bitLen!=bf.bitLen) return false;
     else{
-        for(size_t i=0; i<this->memLen;i++){
+        for(int i=0; i<this->memLen;i++){
             if(pMem[i]!=bf.pMem[i]) return false;
         }
     }
@@ -132,7 +132,7 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 {
     if (this->bitLen==bf.bitLen){
         TBitField res(bitLen);
-        for(size_t i=0; i<bitLen;i++){
+        for(int i=0; i<bitLen;i++){
             if(this->getBit(i)==1 || bf.getBit(i)==1){
                 res.setBit(i);
             }
@@ -141,12 +141,12 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
     }
     else if (this->bitLen>bf.bitLen){
         TBitField res(bitLen);
-        for(size_t i=0; i<bf.bitLen;i++){
+        for(int i=0; i<bf.bitLen;i++){
             if(this->getBit(i)==1 || bf.getBit(i)==1){
                 res.setBit(i);
             }
         }
-        for(size_t i=bf.bitLen; i<this->bitLen;i++){
+        for(int i=bf.bitLen; i<this->bitLen;i++){
             if(this->getBit(i)==1){
                 res.setBit(i);
             }
@@ -155,12 +155,12 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
     }
     else{
         TBitField res(bf.bitLen);
-        for(size_t i=0; i<this->bitLen;i++){
+        for(int i=0; i<this->bitLen;i++){
             if(this->getBit(i)==1 || bf.getBit(i)==1){
                 res.setBit(i);
             }
         }
-        for(size_t i=this->bitLen; i<bf.bitLen;i++){
+        for(int i=this->bitLen; i<bf.bitLen;i++){
             if(this->getBit(i)==1){
                 res.setBit(i);
             }
@@ -173,7 +173,7 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 {
     if (this->bitLen==bf.bitLen){
         TBitField res(bitLen);
-        for(size_t i=0; i<bitLen;i++){
+        for(int i=0; i<bitLen;i++){
             if(this->getBit(i)==1 && bf.getBit(i)==1){
                 res.setBit(i);
             }
@@ -181,8 +181,8 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
         return res;
     }
     else{
-        elType max;
-        elType min;
+        int max;
+        int min;
         if (this->bitLen>bf.bitLen){
             max=this->bitLen;
             min=bf.bitLen;
@@ -192,7 +192,7 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
             min=this->bitLen;
         }
         TBitField res(max);
-        for(size_t i=0; i<min;i++){
+        for(int i=0; i<min;i++){
             if(this->getBit(i)==1 && bf.getBit(i)==1){
                 res.setBit(i);
             }
@@ -204,10 +204,10 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 TBitField TBitField::operator~() // отрицание
 {
     TBitField res(bitLen);
-    for (size_t i=0;i<memLen-1;i++){
+    for (int i=0;i<memLen-1;i++){
         res.pMem[i]=~(this->pMem[i]);
     }
-    for(size_t i=8*sizeof(elType)*(memLen-1);i<bitLen;i++){
+    for(int i=8*sizeof(elType)*(memLen-1);i<bitLen;i++){
         if(getBit(i)==0) res.setBit(i);
     }
     return res;
@@ -229,17 +229,17 @@ std::istream &operator>>(std::istream &istr, TBitField &bf) // ввод
     }
     else bf.memLen=bf.bitLen/(sizeof(elType)*8)+1;
     bf.pMem=new elType[bf.memLen];
-    for (size_t i=0;i<bf.memLen;i++) istr >> bf.pMem[i];
+    for (int i=0;i<bf.memLen;i++) istr >> bf.pMem[i];
     return istr;
 }
 
 std::ostream &operator<<(std::ostream &ostr, const TBitField &bf) // вывод
 {
-    for (size_t i=0; i<bf.memLen-1;i++){
+    for (int i=0; i<bf.memLen-1;i++){
         elType tmp = (elType)bf.pMem[i];
         elType size=sizeof(elType)*8;
         std::string str = "";
-        for (size_t j=0;j<size;j++){
+        for (int j=0;j<size;j++){
             str = std::to_string(tmp%2)+str;
             tmp/=2;
         }
